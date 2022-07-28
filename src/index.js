@@ -1,15 +1,34 @@
 /*
-
-REMEMBER TO PUT DEFER IN INDEX.HTML'S SCRIPT TAG
-
+*
+*
+CONSTANTS
+*
+*
 */
-//global constants
+
 const dogBar = document.querySelector('#dog-bar');
 const dogInfo = document.querySelector('#dog-info');
 const url = 'http://localhost:3000/pups';
 
-//add dog to span bar
-const addToBar = (dog) => {
+/*
+*
+*
+FUNCTION DEFINITIONS
+*
+*
+*/
+
+//get all dogs
+const getDogs = async function(){
+    let res = await fetch(url);
+    let data = await res.json();
+    data.forEach((el) => {
+        addDog(el);
+    })
+}
+
+//add one dog to span bar
+const addDog = (dog) => {
     let span = document.createElement('span');
     span.innerText = dog.name;
 
@@ -54,11 +73,12 @@ const toggleBtn = function(btn) {
     }
 }
 
-//fetch all dogs
-fetch(url)
-.then(res => res.json())
-.then(data => {
-    data.forEach((dog, i) => {
-        addToBar(dog)
-    })
-})
+/*
+*
+*
+CODE TO RUN ON PAGE LOAD
+*
+*
+*/
+
+getDogs();
